@@ -1,0 +1,80 @@
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts.css);
+
+.page {
+  background-color: #000;
+  max-width: 1280px;
+  margin: 0 auto;
+  font-family: 'Inter', Arial, sans-serif;
+  color: #fff;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  padding-top: 45px;
+  width: calc(100% - 400px);
+  margin: 0 auto;
+}
+
+.header__logo {
+  width: 142px;
+  vertical-align: bottom;
+  padding-bottom: 40px;
+}
+
+.header__bottom-line {
+  border-bottom: 1px solid #545454;
+  opacity: 0.7;
+}
+
+.content {
+  width: calc(100% - 400px);
+  margin: 0 auto;
+}
+
+.profile {
+  display: flex;
+  padding-top: 40px;
+}
+
+.profile__avatar {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  margin-right: 30px;
+}
+
+.profile__info {
+  display: flex;
+}
+
+.profile__add-button {
+  align-self: center;
+  margin-left: auto;
+}
+
+.elements {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+  row-gap: 20px;
+  column-gap: 17px;
+  margin-top: 51px;
+}
+
+.element{
+  width: 282px;
+  height: 361px;
+  border-radius: 10px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.element__image {
+  width: 100%;
+}
+
+.footer {
+  width: calc(100% - 400px);
+  margin: 66px auto 60px;
+}
