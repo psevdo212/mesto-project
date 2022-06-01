@@ -3,3 +3,11 @@
   vertical-align: bottom;
   padding-bottom: 40px;
 }
+
+@media screen and (max-width: 425px) {
+  .header__logo {
+    padding-left: 8.438vw;
+    padding-bottom: 32px;
+    width: 104px;
+  }
+}
