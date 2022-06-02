@@ -9,7 +9,11 @@
   </head>
   <body class="page">
     <header class="header">
-      <img src="./image/header/logo.svg" alt="логотип сайта" class="header__logo">
+      <img
+        src="./image/header/logo.svg"
+        alt="логотип сайта"
+        class="header__logo"
+      />
       <div class="header__bottom-line"></div>
     </header>
     <main class="content">
@@ -28,42 +32,66 @@
       </section>
       <section class="places">
         <div class="place">
-          <img class="place__image" src="./image/place/karach-cherk.png" alt="Замок на горе" />
+          <img
+            class="place__image"
+            src="./image/place/karach-cherk.png"
+            alt="Замок на горе"
+          />
           <div class="place__title-wrap">
             <h2 class="place__title">Карачаевск</h2>
             <button class="place__like"></button>
           </div>
         </div>
         <div class="place">
-          <img class="place__image" src="./image/place/elbrus.png" alt="Эльбрус на фоне рассветного неба" />
+          <img
+            class="place__image"
+            src="./image/place/elbrus.png"
+            alt="Эльбрус на фоне рассветного неба"
+          />
           <div class="place__title-wrap">
             <h2 class="place__title">Гора Эльбрус</h2>
             <button class="place__like"></button>
           </div>
         </div>
         <div class="place">
-          <img class="place__image" src="./image/place/dombai.png" alt="Горный пик с ледником на склоне" />
+          <img
+            class="place__image"
+            src="./image/place/dombai.png"
+            alt="Горный пик с ледником на склоне"
+          />
           <div class="place__title-wrap">
             <h2 class="place__title">Домбай</h2>
             <button class="place__like"></button>
           </div>
         </div>
         <div class="place">
-          <img class="place__image" src="./image/place/elbrus.png" alt="Эльбрус на фоне рассветного неба" />
+          <img
+            class="place__image"
+            src="./image/place/elbrus.png"
+            alt="Эльбрус на фоне рассветного неба"
+          />
           <div class="place__title-wrap">
             <h2 class="place__title">Гора Эльбрус</h2>
             <button class="place__like"></button>
           </div>
         </div>
         <div class="place">
-          <img class="place__image" src="./image/place/dombai.png" alt="Горный пик с ледником на склоне" />
+          <img
+            class="place__image"
+            src="./image/place/dombai.png"
+            alt="Горный пик с ледником на склоне"
+          />
           <div class="place__title-wrap">
             <h2 class="place__title">Домбай</h2>
             <button class="place__like"></button>
           </div>
         </div>
         <div class="place">
-          <img class="place__image" src="./image/place/karach-cherk.png" alt="Замок на горе" />
+          <img
+            class="place__image"
+            src="./image/place/karach-cherk.png"
+            alt="Замок на горе"
+          />
           <div class="place__title-wrap">
             <h2 class="place__title">Карачаево-Черкессия</h2>
             <button class="place__like"></button>
@@ -74,5 +102,36 @@
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
+    <div class="popup">
+      <div class="popup__window">
+        <div class="popup__form">
+          <div class="popup__form-container">
+            <h2 class="popup__title">Редактировать профиль</h2>
+            <fieldset class="popup__input-container">
+              <input
+                class="popup__item"
+                type="text"
+                name="username"
+                id="username"
+                placeholder="Жак-Ив Кусто"
+                required
+              />
+              <input
+                class="popup__item"
+                type="text"
+                name="description"
+                id="decription"
+                placeholder="Исследователь океана"
+                required
+              />
+            </fieldset>
+            <fieldset class="popup__handler">
+              <input class="popup__submit-button" type="submit" value="Сохранить" />
+            </fieldset>
+          </div>
+        </div>
+        <button type="button" class="popup__close-button"></button>
+      </div>
+    </div>
   </body>
 </html>
