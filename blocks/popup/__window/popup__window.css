@@ -4,6 +4,7 @@
   top: 155px;
   z-index: 2;
   justify-content: space-between;
+  margin-left: 39px;
 }
 
 @media screen and (max-width: 425px) {
@@ -11,5 +12,6 @@
     flex-direction: column-reverse;
     width: calc(100% - 38px);
     top: 88px;
+    margin: 0;
   }
 }
