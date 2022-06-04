@@ -14,87 +14,118 @@
         alt="логотип сайта"
         class="header__logo"
       />
-      <div class="header__bottom-line"></div>
     </header>
     <main class="content">
       <section class="profile">
         <img
           class="profile__avatar"
-          src="./image/profile/Zhak-Iv.png"
+          src="./image/profile/Zhak-Iv.jpg"
           alt="аватар пользователя"
         />
         <div class="profile__info">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
-          <button type="button" class="profile__edit-button"></button>
+          <button
+            type="button"
+            aria-label="Изменить"
+            class="profile__edit-button"
+          ></button>
           <p class="profile__subtitle">Исследователь океана</p>
         </div>
-        <button type="button" class="profile__add-button"></button>
+        <button
+          type="button"
+          aria-label="Добавить"
+          class="profile__add-button"
+        ></button>
       </section>
       <section class="places">
         <div class="place">
           <img
             class="place__image"
-            src="./image/place/karach-cherk.png"
+            src="./image/place/karach-cherk.jpg"
             alt="Замок на горе"
           />
           <div class="place__title-wrap">
             <h2 class="place__title">Карачаевск</h2>
-            <button class="place__like"></button>
+            <button
+              type="button"
+              aria-label="Нравится"
+              class="place__like"
+            ></button>
           </div>
         </div>
         <div class="place">
           <img
             class="place__image"
-            src="./image/place/elbrus.png"
+            src="./image/place/elbrus.jpg"
             alt="Эльбрус на фоне рассветного неба"
           />
           <div class="place__title-wrap">
             <h2 class="place__title">Гора Эльбрус</h2>
-            <button class="place__like"></button>
+            <button
+              type="button"
+              aria-label="Нравится"
+              class="place__like"
+            ></button>
           </div>
         </div>
         <div class="place">
           <img
             class="place__image"
-            src="./image/place/dombai.png"
+            src="./image/place/dombai.jpg"
             alt="Горный пик с ледником на склоне"
           />
           <div class="place__title-wrap">
             <h2 class="place__title">Домбай</h2>
-            <button class="place__like"></button>
+            <button
+              type="button"
+              aria-label="Нравится"
+              class="place__like"
+            ></button>
           </div>
         </div>
         <div class="place">
           <img
             class="place__image"
-            src="./image/place/elbrus.png"
+            src="./image/place/elbrus.jpg"
             alt="Эльбрус на фоне рассветного неба"
           />
           <div class="place__title-wrap">
             <h2 class="place__title">Гора Эльбрус</h2>
-            <button class="place__like"></button>
+            <button
+              type="button"
+              aria-label="Нравится"
+              class="place__like"
+            ></button>
           </div>
         </div>
         <div class="place">
           <img
             class="place__image"
-            src="./image/place/dombai.png"
+            src="./image/place/dombai.jpg"
             alt="Горный пик с ледником на склоне"
           />
           <div class="place__title-wrap">
             <h2 class="place__title">Домбай</h2>
-            <button class="place__like"></button>
+            <button
+              type="button"
+              aria-label="Нравится"
+              class="place__like"
+            ></button>
           </div>
         </div>
         <div class="place">
           <img
             class="place__image"
-            src="./image/place/karach-cherk.png"
+            src="./image/place/karach-cherk.jpg"
             alt="Замок на горе"
           />
           <div class="place__title-wrap">
             <h2 class="place__title">Карачаево-Черкессия</h2>
-            <button class="place__like"></button>
+            <button
+              type="button"
+              aria-label="Нравится"
+              class="place__like"
+            ></button>
           </div>
         </div>
       </section>
@@ -104,33 +135,33 @@
     </footer>
     <section class="popup">
       <div class="popup__window">
-        <div class="popup__form">
-          <div class="popup__form-container">
-            <h2 class="popup__title">Редактировать профиль</h2>
-            <fieldset class="popup__input-container">
-              <input
-                class="popup__item"
-                type="text"
-                name="username"
-                id="username"
-                placeholder="Жак-Ив Кусто"
-                required
-              />
-              <input
-                class="popup__item"
-                type="text"
-                name="description"
-                id="decription"
-                placeholder="Исследователь океана"
-                required
-              />
-            </fieldset>
-            <fieldset class="popup__handler">
-              <input class="popup__submit-button" type="submit" value="Сохранить" />
-            </fieldset>
-          </div>
-        </div>
-        <button type="button" class="popup__close-button"></button>
+        <form class="popup__form" name="profile-edit">
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <input
+            class="popup__item"
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Жак-Ив Кусто"
+            required
+          />
+          <input
+            class="popup__item"
+            type="text"
+            name="description"
+            id="decription"
+            placeholder="Исследователь океана"
+            required
+          />
+          <button class="popup__submit-button" type="submit">
+            Сохранить
+          </button>
+        </form>
+        <button
+          type="button"
+          aria-label="Закрыть"
+          class="popup__close-button"
+        ></button>
       </div>
     </section>
   </body>

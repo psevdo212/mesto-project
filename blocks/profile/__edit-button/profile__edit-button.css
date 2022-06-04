@@ -8,7 +8,7 @@
   background-repeat: no-repeat;
   align-self: center;
   margin-top: 5px;
-  transition: opacity .3s linear;
+  transition: opacity 0.3s linear;
 }
 
 .profile__edit-button:hover {
@@ -22,5 +22,6 @@
     height: 18px;
     margin-left: 10px;
     margin-top: 0;
+    background-size: 7.5px;
   }
 }
