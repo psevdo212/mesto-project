@@ -9,7 +9,7 @@
   align-self: flex-end;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 550px) {
   .popup__form {
     width: 100%;
     align-self: flex-start;

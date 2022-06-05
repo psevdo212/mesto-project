@@ -6,7 +6,7 @@
   margin-left: 39px;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 550px) {
   .popup__window {
     flex-direction: column-reverse;
     width: calc(100% - 38px);

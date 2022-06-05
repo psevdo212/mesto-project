@@ -13,7 +13,7 @@
   transition: opacity 0.3s linear;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 550px) {
   .popup__close-button {
     align-self: flex-end;
     width: 20px;
