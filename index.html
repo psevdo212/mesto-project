@@ -39,6 +39,7 @@
       </section>
       <section class="places">
         <div class="place">
+          <button class="place__delete" type="button" aria-label="Удалить"></button>
           <img
             class="place__image"
             src="./image/place/karach-cherk.jpg"
@@ -161,6 +162,37 @@
           type="button"
           aria-label="Закрыть"
           class="popup__close-button"
+        ></button>
+      </div>
+    </section>
+    <section class="newplace">
+      <div class="newplace__window">
+        <form class="newplace__form" name="place-add">
+          <h2 class="newplace__title">Новое место</h2>
+          <input
+            class="newplace__item"
+            type="text"
+            name="place-name"
+            id="place-name"
+            placeholder="Название"
+            required
+          />
+          <input
+            class="newplace__item"
+            type="text"
+            name="image-link"
+            id="image-link"
+            placeholder="Ссылка на картинку"
+            required
+          />
+          <button class="newplace__submit-button" type="submit">
+            Создать
+          </button>
+        </form>
+        <button
+          type="button"
+          aria-label="Закрыть"
+          class="newplace__close-button"
         ></button>
       </div>
     </section>

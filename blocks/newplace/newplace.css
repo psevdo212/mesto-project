@@ -1,4 +1,4 @@
-.popup {
+.newplace {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s linear 800ms, opacity 800ms;
@@ -14,7 +14,7 @@
   z-index: 1;
 }
 
-.popup::before {
+.newplace::before {
   content: "";
   background-color: #000;
   opacity: 0.5;
