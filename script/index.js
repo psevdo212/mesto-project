@@ -3,7 +3,7 @@
 let editButton = document.querySelector(".profile__edit-button");
 let closePopupButton = document.querySelector(".popup__close-button");
 let popup = document.querySelector(".popup");
-let like = document.querySelector('.place__like');
+
 let addButton = document.querySelector(".profile__add-button");
 let closeNewplaceButton = document.querySelector(".newplace__close-button");
 let newplace = document.querySelector(".newplace");
@@ -21,12 +21,12 @@ editButton.addEventListener("click", popupToggle);
 closePopupButton.addEventListener("click", popupToggle);
 
 // лайки (пока срабатывает только первый)
-function likeToggle () {
-  like.classList.toggle('place__like_active');
-  return;
+let likes = document.querySelectorAll('.place__like'); //выбираю все элементы с этим классом
+for (let elem of likes) { // перебираю массив
+  elem.addEventListener('click', () => { // на каждый элемент вешается событие
+    elem.classList.toggle('place__like_active'); // а тут при клике на событие вызывается функция
+  });
 }
-
-like.addEventListener('click', likeToggle);
 
 //добавление места
 
