@@ -37,3 +37,12 @@
 @import url(../blocks/newplace/__submit-button/newplace__submit-button.css);
 @import url(../blocks/newplace/__title/newplace__title.css);
 @import url(../blocks/newplace/__window/newplace__window.css);
+@import url(../blocks/image-big/image-big.css);
+@import url(../blocks/image-big/_opened/image-big_opened.css);
+@import url(../blocks/image-big/__close-button/image-big__close-button.css);
+@import url(../blocks/image-big/__figcaption/image-big__figcaption.css);
+@import url(../blocks/image-big/__figure/image-big__figure.css);
+@import url(../blocks/image-big/__image/image-big__image.css);
+@import url(../blocks/image-big/__window/image-big__window.css);
+
+

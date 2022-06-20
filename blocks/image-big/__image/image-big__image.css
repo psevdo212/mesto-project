@@ -1,0 +1,5 @@
+.image-big__image {
+  object-fit: cover;
+  object-position: center;
+  vertical-align: bottom;
+}

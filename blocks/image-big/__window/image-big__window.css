@@ -1,0 +1,15 @@
+.image-big__window {
+  position: fixed;
+  display: flex;
+  z-index: 2;
+  justify-content: space-between;
+  margin-left: 39px;
+}
+
+@media screen and (max-width: 550px) {
+  .image-big__window {
+    flex-direction: column-reverse;
+    width: calc(100% - 38px);
+    margin: 0;
+  }
+}
