@@ -91,39 +91,30 @@ const initialCards = [
   }
   ];
 
-  const placeName = document.querySelector('#place-name');
-  const placeUrl = document.querySelector('#image-link');
-  function addCard () {
-    const placeContainer = document.querySelector('.places');
-    placeContainer.insertAdjacentHTML('afterbegin', `
-    <div class="place">
-    <button class="place__delete" type="button" aria-label="Удалить"></button>
-    <img
-      class="place__image"
-      src="${placeUrl.value}"
-      alt="${placeName.value}"
-    />
-    <div class="place__title-wrap">
-      <h2 class="place__title">${placeName.value}</h2>
-      <button
-        type="button"
-        aria-label="Нравится"
-        class="place__like"
-      ></button>
-    </div>
-  </div>`);
+
+  function addCard (placeName, placeUrl) {
+    const placeContainer = document.querySelector('.places'); //тут размещаются карточки
+    const placeTemplate = document.querySelector('#place-template').content; //получаю содержимое шаблона
+    const placeElement = placeTemplate.querySelector('.place').cloneNode(true); //клонирую
+    placeElement.querySelector('.place__title').textContent = placeName;//название местности из поля формы
+    placeElement.querySelector('.place__image').src = placeUrl;//ссылка на картинку из поля формы
+    placeContainer.prepend(placeElement);//размещение нового элемента в начале списка
+    placeElement.querySelector('.place__like').addEventListener('click', function (evt) { // на элемент вешается событие
+      evt.target.classList.toggle('place__like_active'); // а тут при клике на событие вызывается функция
+    });
   }
 
   // отправка формы нового места
 // Находим форму в DOM
 const newplaceFormElement = document.querySelector('.newplace__form');
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
 
+// Обработчик «отправки» формы
 function newplaceSubmitHandler (evt) {
   evt.preventDefault();
-  addCard();
-  newplaceToggle(); //закрываем окно псле нажатия кнокпи Сохранить
+  const name = document.querySelector('#place-name');//выбор поля с названием
+  const url = document.querySelector('#image-link');//поле со ссылкой
+  addCard(name.value, url.value);//передаем содержимое полей в функцию добавления
+  newplaceToggle(); //закрываем окно после нажатия кнопки Сохранить
 }
 
 // Прикрепляем обработчик к форме:
