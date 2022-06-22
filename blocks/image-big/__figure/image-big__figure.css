@@ -1,11 +1,14 @@
 .image-big__figure{
   position: relative;
-  z-index: 2;
   align-self: flex-end;
-  max-width: 75vw;
-  max-height: 75vh;
   z-index: 2;
   margin: 0;
   padding: 0;
   padding-top: 40px;
+}
+
+@media screen and (max-width: 550px) {
+  .image-big__figure {
+    padding-top: 16px;
+  }
 }
