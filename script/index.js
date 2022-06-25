@@ -89,8 +89,8 @@ function createCard(placeName, placeUrl) {
   return placeElement;
 }
 
-function addCard(placeContainer, placeElement) {
-  placeContainer.prepend(placeElement); //размещение нового элемента в начале списка
+function addCard(сontainer, element) {
+  сontainer.prepend(element); //размещение нового элемента в начале списка
 }
 
 // Отправка формы нового места
