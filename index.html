@@ -37,8 +37,7 @@
           class="profile__add-button"
         ></button>
       </section>
-      <section class="places">
-      </section>
+      <section class="places"></section>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
@@ -63,9 +62,7 @@
             placeholder="Профессия"
             required
           />
-          <button class="popup__submit-button" type="submit">
-            Сохранить
-          </button>
+          <button class="popup__submit-button" type="submit">Сохранить</button>
         </form>
         <button
           type="button"
@@ -94,9 +91,7 @@
             placeholder="Ссылка на картинку"
             required
           />
-          <button class="newplace__submit-button" type="submit">
-            Создать
-          </button>
+          <button class="newplace__submit-button" type="submit">Создать</button>
         </form>
         <button
           type="button"
@@ -108,8 +103,11 @@
     <section class="image-big">
       <div class="image-big__window">
         <figure class="image-big__figure">
-          <img class="image-big__image"  src="src"
-                alt="alttext">
+          <img
+            class="image-big__image"
+            src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg"
+            alt="alttext"
+          />
           <figcaption class="image-big__figcaption"></figcaption>
         </figure>
         <button
@@ -121,12 +119,12 @@
     </section>
     <template id="place-template">
       <div class="place">
-        <button class="place__delete" type="button" aria-label="Удалить"></button>
-        <img
-          class="place__image"
-          src=""
-          alt=""
-        />
+        <button
+          class="place__delete"
+          type="button"
+          aria-label="Удалить"
+        ></button>
+        <img class="place__image" src="" alt="" />
         <div class="place__title-wrap">
           <h2 class="place__title"></h2>
           <button
