@@ -4,8 +4,8 @@ const editButton = document.querySelector(".profile__edit-button");
 const closeEditButton = document.querySelector(".popup__close-button");
 const editPopup = document.querySelector(".popup");
 const addButton = document.querySelector(".profile__add-button");
-const closeNewplaceButton = document.querySelector(".newplace__close-button");
-const newplace = document.querySelector(".newplace");
+const closeNewPlaceButton = document.querySelector(".newplace__close-button");
+const newPlace = document.querySelector(".newplace");
 const username = document.getElementById("username");
 const description = document.getElementById("description");
 const profileTitle = document.querySelector(".profile__title");
@@ -13,18 +13,18 @@ const profileSubtitle = document.querySelector(".profile__subtitle");
 const imgBig = document.querySelector(".image-big");
 const closeBigImg = document.querySelector(".image-big__close-button");
 const editForm = document.querySelector(".popup__form"); //поиск формы редактирования профиля
-const newplaceFormElement = document.querySelector(".newplace__form"); //поиск формы добавления места
+const newPlaceFormElement = document.querySelector(".newplace__form"); //поиск формы добавления места
 const placeContainer = document.querySelector(".places"); //контейнер с карточками мест
 
 //МОДАЛЬНЫЕ ОКНА
 function openModalWindow(modalWindow) {
   //открытие модалки
-  modalWindow.classList.add("opened");
+  modalWindow.classList.add("popup_opened");
 }
 
 function closeModalWindow(modalWindow) {
   //закрытие модалки
-  modalWindow.classList.remove("opened");
+  modalWindow.classList.remove("popup_opened");
 }
 
 //РЕДАКТИРОВАНИЕ ПРОФИЛЯ
@@ -40,23 +40,20 @@ function editFormSubmitHandler(evt) {
   evt.preventDefault();
   const name = username.value;
   const job = description.value;
-  profileTitle.textContent = name; //заменяю текс профиля значением из поля формы
+  profileTitle.textContent = name; //заменяю текст профиля значением из поля формы
   profileSubtitle.textContent = job;
   closeModalWindow(editPopup); //закрываем окно после нажатия кнопки Сохранить
 }
 
 //МЕСТА
 //добавляем первые шесть карточек
-function addDefaultCards() {
-  for (let card of initialCards) {
-    addCard(placeContainer, createCard(card.name, card.link));
-  }
-}
-addDefaultCards();
+initialCards.forEach((item) => {
+  addCard(placeContainer, createCard(item.name, item.link));
+});
 
 //добавление места через кнопку
-function openNewplace() {
-  openModalWindow(newplace);
+function openNewPlace() {
+  openModalWindow(newPlace);
 }
 
 function createCard(placeName, placeUrl) {
@@ -94,12 +91,12 @@ function addCard(сontainer, element) {
 }
 
 // Отправка формы нового места
-function newplaceSubmitHandler(evt) {
+function newPlaceSubmitHandler(evt) {
   evt.preventDefault();
   const name = document.querySelector("#place-name"); //выбор поля с названием
   const url = document.querySelector("#image-link"); //поле со ссылкой
   addCard(placeContainer, createCard(name.value, url.value)); //передаем содержимое полей в функцию добавления
-  closeModalWindow(newplace); //закрываем окно после нажатия кнопки Сохранить
+  closeModalWindow(newPlace); //закрываем окно после нажатия кнопки Сохранить
 }
 
 //Открытие модалки с большой картинкой
@@ -113,17 +110,15 @@ closeBigImg.addEventListener("click", function () {
 }); //открытие большой картинки
 editButton.addEventListener("click", openEditPopup); //открытие окна редактирования профиля
 closeEditButton.addEventListener("click", function () {
-  //закрытие модалки редактирования
-  closeModalWindow(editPopup);
+  closeModalWindow(editPopup); //закрытие модалки редактирования
 });
-addButton.addEventListener("click", openNewplace); //открытие места
-closeNewplaceButton.addEventListener("click", function () {
-  //закрытие места
-  closeModalWindow(newplace);
+addButton.addEventListener("click", openNewPlace); //открытие места
+closeNewPlaceButton.addEventListener("click", function () {
+  closeModalWindow(newPlace); //закрытие места
 });
 
 // Прикрепляем обработчик к форме редактирования профиля:
 editForm.addEventListener("submit", editFormSubmitHandler);
 
 // Прикрепляем обработчик к форме нового места:
-newplaceFormElement.addEventListener("submit", newplaceSubmitHandler);
+newPlaceFormElement.addEventListener("submit", newPlaceSubmitHandler);

@@ -41,4 +41,4 @@
 @import url(../blocks/image-big/__figure/image-big__figure.css);
 @import url(../blocks/image-big/__image/image-big__image.css);
 @import url(../blocks/image-big/__window/image-big__window.css);
-@import url(../blocks/opened/opened.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
