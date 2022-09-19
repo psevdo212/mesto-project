@@ -53,7 +53,10 @@
             id="username"
             placeholder="Имя"
             required
+            minlength="2"
+            maxlength="40"
           />
+          <p class="popup__input-error username-error">Error message</p>
           <input
             class="popup__item"
             type="text"
@@ -61,7 +64,10 @@
             id="description"
             placeholder="Профессия"
             required
+            minlength="2"
+            maxlength="200"
           />
+          <p class="popup__input-error description-error">Error message</p>
           <button class="popup__submit-button" type="submit">Сохранить</button>
         </form>
         <button
@@ -72,8 +78,9 @@
       </div>
     </section>
     <section class="newplace">
+      <div class="overlay"></div>
       <div class="newplace__window">
-        <form class="newplace__form" name="place-add">
+        <form class="newplace__form" name="place-add" novalidate>
           <h2 class="newplace__title">Новое место</h2>
           <input
             class="newplace__item"
@@ -83,14 +90,16 @@
             placeholder="Название"
             required
           />
+          <span class="newplace__input-error place-name-error"></span>
           <input
             class="newplace__item"
-            type="text"
+            type="url"
             name="image-link"
             id="image-link"
             placeholder="Ссылка на картинку"
             required
           />
+          <span class="newplace__input-error image-link-error"></span>
           <button class="newplace__submit-button" type="submit">Создать</button>
         </form>
         <button
@@ -101,6 +110,7 @@
       </div>
     </section>
     <section class="image-big">
+      <div class="overlay">/</div>
       <div class="image-big__window">
         <figure class="image-big__figure">
           <img
@@ -136,6 +146,9 @@
       </div>
     </template>
     <script src="./script/constants.js"></script>
-    <script src="./script/index.js"></script>
+    <script type="module" src="./script/index.js"></script>
+    <script type="module" src="./script/modal.js"></script>
+    <script type="module" src="./script/cards.js"></script>
+    <script type="module" src="./script/validate.js"></script>
   </body>
 </html>

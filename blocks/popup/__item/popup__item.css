@@ -13,6 +13,10 @@
   padding: 3px 0 10px 0;
 }
 
+.popup__item:last-of-type {
+  margin: 15px 36px 0;
+}
+
 @media screen and (max-width: 550px) {
   .popup__item {
     width: calc(100% - 44px);
