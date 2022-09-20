@@ -27,14 +27,16 @@
           <button
             type="button"
             aria-label="Изменить"
-            class="profile__edit-button"
+            class="js-open-modal profile__edit-button"
+            data-modal="profile"
           ></button>
           <p class="profile__subtitle">Исследователь океана</p>
         </div>
         <button
           type="button"
           aria-label="Добавить"
-          class="profile__add-button"
+          class="js-open-modal profile__add-button"
+          data-modal="new-place"
         ></button>
       </section>
       <section class="places"></section>
@@ -42,7 +44,7 @@
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
-    <section class="popup">
+    <section class="popup" data-modal="profile">
       <div class="popup__window">
         <form class="popup__form" name="profile-edit">
           <h2 class="popup__title">Редактировать профиль</h2>
@@ -77,35 +79,36 @@
         ></button>
       </div>
     </section>
-    <section class="newplace">
-      <div class="overlay"></div>
-      <div class="newplace__window">
-        <form class="newplace__form" name="place-add" novalidate>
-          <h2 class="newplace__title">Новое место</h2>
+    <section class="popup newplace" data-modal="new-place">
+      <div class="popup__window">
+        <form class="popup__form" name="place-add" novalidate>
+          <h2 class="popup__title">Новое место</h2>
           <input
-            class="newplace__item"
+            class="popup__item"
             type="text"
             name="place-name"
             id="place-name"
             placeholder="Название"
             required
+            minlength="2"
+            maxlength="40"
           />
-          <span class="newplace__input-error place-name-error"></span>
+          <p class="popup__input-error place-name-error"></p>
           <input
-            class="newplace__item"
+            class="popup__item"
             type="url"
             name="image-link"
             id="image-link"
             placeholder="Ссылка на картинку"
             required
           />
-          <span class="newplace__input-error image-link-error"></span>
-          <button class="newplace__submit-button" type="submit">Создать</button>
+          <p class="popup__input-error image-link-error"></p>
+          <button class="popup__submit-button" type="submit">Создать</button>
         </form>
         <button
           type="button"
           aria-label="Закрыть"
-          class="newplace__close-button"
+          class="popup__close-button"
         ></button>
       </div>
     </section>
@@ -123,7 +126,7 @@
         <button
           type="button"
           aria-label="Закрыть"
-          class="image-big__close-button"
+          class="popup__close-button"
         ></button>
       </div>
     </section>

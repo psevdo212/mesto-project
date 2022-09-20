@@ -8,8 +8,7 @@ export const username = document.getElementById("username");
 export const description = document.getElementById("description");
 export const imgBig = document.querySelector(".image-big");
 const closeBigImg = document.querySelector(".image-big__close-button");
-const closeEditButton = document.querySelector(".popup__close-button");
-const closeNewPlaceButton = document.querySelector(".newplace__close-button");
+const closeButton = Array.from(document.querySelectorAll(".popup__close-button"));
 
 
 //МОДАЛЬНЫЕ ОКНА
@@ -18,27 +17,27 @@ export function openModalWindow(modalWindow) {
   modalWindow.classList.add("popup_opened");
 }
 
-export function closeModalWindow(modalWindow) {
+export function closeModalWindow() {
   //закрытие модалки
-  modalWindow.classList.remove("popup_opened");
+  document.querySelector(".popup_opened").classList.remove("popup_opened");
 }
 
+// слушатель на каждую кнопку закрытия модального окна
+closeButton.forEach((item) => {
+  item.addEventListener('click', (item) => {
+    closeModalWindow(item);
+  });
+});
 
 //Открытие модалки с большой картинкой
 export function openImgBig() {
   openModalWindow(imgBig);
-  closeBigImg.addEventListener('click', () => {
-    closeModalWindow(imgBig);
-  });
 }
 
 //добавление места через кнопку
 export function openNewPlace() {
   openModalWindow(newPlace);
   newPlace.addEventListener('submit', newPlaceSubmitHandler);
-  closeNewPlaceButton.addEventListener("click", function () {
-    closeModalWindow(newPlace); //закрытие места
-  });
 }
 
 //РЕДАКТИРОВАНИЕ ПРОФИЛЯ
@@ -48,9 +47,6 @@ export function openEditPopup() {
   description.value = profileSubtitle.textContent;
   openModalWindow(editPopup);
   editPopup.addEventListener('submit', editFormSubmitHandler);
-  closeEditButton.addEventListener("click", function () {
-    closeModalWindow(editPopup); //закрытие модалки редактирования
-  });
 }
 
 // Отправка формы редактирования профиля
