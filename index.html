@@ -54,9 +54,11 @@
             name="username"
             id="username"
             placeholder="Имя"
-            required
             minlength="2"
             maxlength="40"
+            pattern="^[а-яА-Яa-zA-Z-_]+$"
+            data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы."
+            required
           />
           <p class="popup__input-error username-error">Error message</p>
           <input
@@ -65,9 +67,11 @@
             name="description"
             id="description"
             placeholder="Профессия"
-            required
             minlength="2"
             maxlength="200"
+            pattern="^[а-яА-Яa-zA-Z-_]+$"
+            data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы."
+            required
           />
           <p class="popup__input-error description-error">Error message</p>
           <button class="popup__submit-button" type="submit">Сохранить</button>
@@ -89,9 +93,11 @@
             name="place-name"
             id="place-name"
             placeholder="Название"
-            required
             minlength="2"
-            maxlength="40"
+            maxlength="30"
+            pattern="^[а-яА-Яa-zA-Z-_]+$"
+            data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы."
+            required
           />
           <p class="popup__input-error place-name-error"></p>
           <input
@@ -113,7 +119,6 @@
       </div>
     </section>
     <section class="image-big">
-      <div class="overlay">/</div>
       <div class="image-big__window">
         <figure class="image-big__figure">
           <img
