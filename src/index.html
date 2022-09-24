@@ -5,12 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mesto</title>
-    <link rel="stylesheet" href="./pages/index.css" />
   </head>
   <body class="page">
     <header class="header">
       <img
-        src="./image/header/logo.svg"
+        src="<%=require('./image/header/logo.svg')%>"
         alt="логотип сайта"
         class="header__logo"
       />
@@ -19,7 +18,7 @@
       <section class="profile">
         <img
           class="profile__avatar"
-          src="./image/profile/Zhak-Iv.jpg"
+          src="<%=require('./image/profile/Zhak-Iv.jpg')%>"
           alt="аватар пользователя"
         />
         <div class="profile__info">
@@ -27,7 +26,7 @@
           <button
             type="button"
             aria-label="Изменить"
-            class="js-open-modal profile__edit-button"
+            class="profile__edit-button"
             data-modal="profile"
           ></button>
           <p class="profile__subtitle">Исследователь океана</p>
@@ -35,7 +34,7 @@
         <button
           type="button"
           aria-label="Добавить"
-          class="js-open-modal profile__add-button"
+          class="profile__add-button"
           data-modal="new-place"
         ></button>
       </section>
@@ -153,10 +152,5 @@
         </div>
       </div>
     </template>
-    <script src="./script/constants.js"></script>
-    <script type="module" src="./script/index.js"></script>
-    <script type="module" src="./script/modal.js"></script>
-    <script type="module" src="./script/cards.js"></script>
-    <script type="module" src="./script/validate.js"></script>
   </body>
 </html>

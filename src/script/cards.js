@@ -1,4 +1,5 @@
-import { openImgBig } from './modal.js';
+"use strict";
+import { openImgBig } from "./modal.js";
 
 export const placeContainer = document.querySelector(".places"); //контейнер с карточками мест
 
