@@ -28,13 +28,6 @@
 @import url(../blocks/popup/__submit-button/popup__submit-button.css);
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__window/popup__window.css);
-@import url(../blocks/newplace/newplace.css);
-@import url(../blocks/newplace/__close-button/newplace__close-button.css);
-@import url(../blocks/newplace/__form/newplace__form.css);
-@import url(../blocks/newplace/__item/newplace__item.css);
-@import url(../blocks/newplace/__submit-button/newplace__submit-button.css);
-@import url(../blocks/newplace/__title/newplace__title.css);
-@import url(../blocks/newplace/__window/newplace__window.css);
 @import url(../blocks/image-big/image-big.css);
 @import url(../blocks/image-big/__close-button/image-big__close-button.css);
 @import url(../blocks/image-big/__figcaption/image-big__figcaption.css);

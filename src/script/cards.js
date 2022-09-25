@@ -1,14 +1,5 @@
 "use strict";
-import { openImgBig } from "./modal.js";
-import { initialCards } from "./constants.js";
-
-export const placeContainer = document.querySelector(".places"); //контейнер с карточками мест
-
-//МЕСТА
-//добавляем первые шесть карточек
-initialCards.forEach((item) => {
-  addCard(placeContainer, createCard(item.name, item.link));
-});
+import { openImgBig } from "./index.js";
 
 export function createCard(placeName, placeUrl) {
   const placeTemplate = document.querySelector("#place-template").content; //получаю содержимое шаблона
@@ -40,6 +31,3 @@ export function createCard(placeName, placeUrl) {
   return placeElement;
 }
 
-export function addCard(сontainer, element) {
-  сontainer.prepend(element); //размещение нового элемента в начале списка
-}
