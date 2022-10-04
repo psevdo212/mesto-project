@@ -145,7 +145,6 @@ function newPlaceSubmitHandler(evt) {
     .finally(() => {
       renderLoading(false, submitButton, defaultButtonText);
     });
-  newPlace.removeEventListener("submit", newPlaceSubmitHandler);
 }
 
 //Добавление новой карточки
