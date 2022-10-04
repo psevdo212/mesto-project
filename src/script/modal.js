@@ -1,5 +1,4 @@
 "use strict";
-
 //МОДАЛЬНЫЕ ОКНА
 export function openModalWindow(modalWindow) {
   //открытие модалки
@@ -10,8 +9,12 @@ export function openModalWindow(modalWindow) {
 
 export function closeModalWindow() {
   //закрытие модалки
-  document.querySelector(".popup_opened").classList.remove("popup_opened");
-  document.removeEventListener("keydown", closeOnEscape);
+  const openedPopup = document.querySelector(".popup_opened");
+  if (openedPopup) {
+    openedPopup.classList.remove("popup_opened");
+    document.removeEventListener("keydown", closeOnEscape);
+    document.removeEventListener("click", closeOnOverlay);
+  }
 }
 
 //слушатель закрытия по ESC
@@ -23,12 +26,7 @@ function closeOnEscape(evt) {
 
 //закрытие по клику на оверлей
 function closeOnOverlay(evt) {
-  const modal = document.querySelector(".popup_opened");
-  const composedPath = evt.composedPath();
-  const overlayClick =
-    composedPath.includes(modal) &&
-    !composedPath.includes(modal.querySelector(".popup__form"));
-  if (overlayClick) {
+  if (evt.target.classList.contains("popup_opened")) {
     closeModalWindow();
   }
 }

@@ -5,13 +5,18 @@ import { deleteCard, setLike, deleteLike } from "./api.js";
 export function createCard(card, userId) {
   const placeTemplate = document.querySelector("#place-template").content; //получаю содержимое шаблона
   const placeElement = placeTemplate.querySelector(".place").cloneNode(true); //клонирую
+  const placeTitle = placeElement.querySelector(".place__title");
   const likeButton = placeElement.querySelector(".place__like");
   const likeCounter = placeElement.querySelector(".place__like-count");
+  const placeImg = placeElement.querySelector(".place__image");
+  const placeDeleteButton = placeElement.querySelector(".place__delete");
+  const image = document.querySelector(".image-big__image");
+  const figcaption = document.querySelector(".image-big__figcaption");
   const likeActive = "place__like_active";
   const isUserOwner = card.owner._id === userId;
-  placeElement.querySelector(".place__title").textContent = card.name; //название местности из поля формы
-  placeElement.querySelector(".place__image").src = card.link; //ссылка на картинку из поля формы
-  placeElement.querySelector(".place__image").alt = card.name; //прописываем альтом название места
+  placeTitle.textContent = card.name; //название местности из поля формы
+  placeImg.src = card.link; //ссылка на картинку из поля формы
+  placeImg.alt = card.name; //прописываем альтом название места
   likeCounter.textContent = card.likes.length;
   if (userId) {
     const likedByUser = card.likes.some((userInfo) => {
@@ -45,29 +50,25 @@ export function createCard(card, userId) {
         });
     }
   });
-  placeElement
-    .querySelector(".place__image")
-    .addEventListener("click", function () {
-      document.querySelector(".image-big__image").src = card.link;
-      document.querySelector(".image-big__image").alt = card.name;
-      document.querySelector(".image-big__figcaption").textContent = card.name;
-      openImgBig();
-    });
+  placeImg.addEventListener("click", function () {
+    image.src = card.link;
+    image.alt = card.name;
+    figcaption.textContent = card.name;
+    openImgBig();
+  });
   if (isUserOwner) {
-    placeElement
-      .querySelector(".place__delete")
-      .addEventListener("click", function () {
-        deleteCard(card._id) //удаление карточки
-          .then(() => {
-            const placeItem = placeElement.closest(".place"); //ищем ближайший родительский класс .place
-            placeItem.remove(); //и удаляем его
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      });
+    placeDeleteButton.addEventListener("click", function () {
+      deleteCard(card._id) //удаление карточки
+        .then(() => {
+          const placeItem = placeElement.closest(".place"); //ищем ближайший родительский класс .place
+          placeItem.remove(); //и удаляем его
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
   } else {
-    placeElement.querySelector(".place__delete").remove();
+    placeDeleteButton.remove();
   }
   return placeElement;
 }

@@ -34,6 +34,11 @@ export function enableValidation(obj) {
     const buttonElement = formElement.querySelector(obj.submitButtonSelector);
     toggleButtonState(inputList, buttonElement);
     inputList.forEach((inputElement) => {
+      formElement.addEventListener("reset", () => {
+        setTimeout(() => {
+          toggleButtonState(inputList, buttonElement); //перевод кнопки в неактивное состояние после очистки полей формы
+        }, 0);
+      });
       inputElement.addEventListener("input", function () {
         checkInputValidity(formElement, inputElement);
         toggleButtonState(inputList, buttonElement);
@@ -65,4 +70,3 @@ export function enableValidation(obj) {
     }
   }
 }
-
