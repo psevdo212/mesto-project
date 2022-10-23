@@ -3,13 +3,15 @@
 import { enableValidation } from "./validate.js";
 import { openModalWindow, closeModalWindow } from "./modal.js";
 import { createCard } from "./cards.js";
-import {
-  getInitialCards,
-  getUserInfo,
-  changeUserInfo,
-  changeAvatar,
-  postNewCard,
-} from "./api.js";
+// import {
+//   getInitialCards,
+//   getUserInfo,
+//   changeUserInfo,
+//   changeAvatar,
+//   postNewCard,
+// } from "./api.js";
+import Api from "./components/Api.js";
+import { config } from "./utils/constants.js";
 
 const avatar = document.querySelector(".avatar");
 const newPlace = document.querySelector(".popup_newplace");
@@ -31,6 +33,10 @@ const profileImg = document.querySelector(".profile__img");
 const name = document.querySelector("#place-name"); //выбор поля с названием
 const url = document.querySelector("#image-link"); //поле со ссылкой
 let userId;
+
+const getApi = new Api (config); //новый экземпляр класса Api
+const userInfo = getApi.getUserInfo(); //тут получаем инфу о пользователе
+const initCards = getApi.getInitialCards(); //тут получаем изначальный массив карточек
 
 //включение валидации полей в модальных окнах
 enableValidation({
@@ -66,7 +72,7 @@ function openAvatarPopup() {
 }
 
 //Получение данных профиля и отрисовка начальных карточек
-Promise.all([getUserInfo(), getInitialCards()])
+Promise.all([userInfo, initCards])
   .then(([userData, cards]) => {
     // тут установка данных пользователя
     profileTitle.textContent = userData.name;
@@ -88,7 +94,7 @@ function editFormSubmitHandler(evt) {
   const submitButton = evt.submitter;
   const defaultButtonText = submitButton.textContent;
   renderLoading(true, submitButton);
-  changeUserInfo({ name: username.value, about: description.value })
+  getApi.changeUserInfo({ name: username.value, about: description.value })
     .then((res) => {
       profileTitle.textContent = res.name;
       profileSubtitle.textContent = res.about;
@@ -109,7 +115,7 @@ function avatarSubmitHandler(evt) {
   const submitButton = evt.submitter;
   const defaultButtonText = submitButton.textContent;
   renderLoading(true, submitButton);
-  changeAvatar(avatarLink.value)
+  getApi.changeAvatar(avatarLink.value)
     .then((res) => {
       profileImg.src = res.avatar;
       evt.target.reset(); //очистка полей формы после отправки
@@ -129,7 +135,7 @@ function newPlaceSubmitHandler(evt) {
   const submitButton = evt.submitter;
   const defaultButtonText = submitButton.textContent;
   renderLoading(true, submitButton);
-  postNewCard({
+  getApi.postNewCard({
     name: name.value,
     link: url.value,
   })
