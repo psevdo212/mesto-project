@@ -1,6 +1,7 @@
 "use strict";
 import { openImgBig } from "./index.js";
 import { deleteCard, setLike, deleteLike } from "./api.js";
+//import PopupWithImage from "./components/PopupWithImage.js";
 
 export function createCard(card, userId) {
   const placeTemplate = document.querySelector("#place-template").content; //получаю содержимое шаблона
@@ -12,6 +13,8 @@ export function createCard(card, userId) {
   const placeDeleteButton = placeElement.querySelector(".place__delete");
   const image = document.querySelector(".image-big__image");
   const figcaption = document.querySelector(".image-big__figcaption");
+  //const bigImg = document.querySelector(".image-big");
+  //const imgBig = new PopupWithImage(bigImg); //тут создается экземпляр класса попапа с большой картинкой
   const likeActive = "place__like_active";
   const isUserOwner = card.owner._id === userId;
   placeTitle.textContent = card.name; //название местности из поля формы
@@ -54,8 +57,8 @@ export function createCard(card, userId) {
     image.src = card.link;
     image.alt = card.name;
     figcaption.textContent = card.name;
-    openImgBig();
-  });
+    openImgBig();  }
+    );
   if (isUserOwner) {
     placeDeleteButton.addEventListener("click", function () {
       deleteCard(card._id) //удаление карточки

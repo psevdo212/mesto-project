@@ -167,12 +167,12 @@ function renderLoading(isLoading, submitButton, defaultButtonText) {
   }
 }
 
-// слушатель на каждую кнопку закрытия модального окна
+//слушатель на каждую кнопку закрытия модального окна
 closeButtons.forEach((item) => {
   item.addEventListener("click", (item) => {
-    closeModalWindow();
-  });
-});
+     closeModalWindow();
+   });
+ });
 
 editButton.addEventListener("click", openEditPopup); //слушатель на открытие окна редактирования профиля
 addButton.addEventListener("click", openNewPlace); //слушатель на добавление нового места
