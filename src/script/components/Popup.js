@@ -6,7 +6,7 @@ export default class Popup {
 
   open() {
     this._popup.classList.add("popup_opened");
-    this.setEventListeners();
+    this._setEventListeners();
   }
 
   close() {
@@ -15,21 +15,23 @@ export default class Popup {
     document.removeEventListener("click", this._closeOnOverlay);
   }
 
-  setEventListeners() {
+  _setEventListeners() {
     document.addEventListener("click", this._closeOnOverlay);
     document.addEventListener("keydown", this._closeOnEscape);
-    this._closeButton.addEventListener("click", this.close);
+    this._closeButton.addEventListener("click", () => {
+      this.close();
+    });
   }
 
-  _closeOnEscape(evt) {
+  _closeOnEscape = (evt) => {
     if (evt.key === "Escape") {
       this.close();
     }
-  }
+  };
 
-  _closeOnOverlay(evt) {
+  _closeOnOverlay = (evt) => {
     if (evt.target.classList.contains("popup_opened")) {
       this.close();
     }
-  }
+  };
 }
