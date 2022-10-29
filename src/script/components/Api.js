@@ -1,5 +1,3 @@
-//check git
-
 export default class Api {
   constructor(config) {
     this._baseUrl = config.baseUrl;
