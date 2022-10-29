@@ -4,33 +4,16 @@ import { createCard } from "./cards.js";
 import UserInfo from "./components/UserInfo.js";
 import PopupWithForm from "./components/PopupWithForm.js";
 import PopupWithImage from "./components/PopupWithImage.js";
-// import {
-//   getInitialCards,
-//   getUserInfo,
-//   changeUserInfo,
-//   changeAvatar,
-//   postNewCard,
-// } from "./api.js";
 import Api from "./components/Api.js";
 import { config } from "./utils/constants.js";
 
-const avatar = document.querySelector(".avatar");
 const newPlace = document.querySelector(".popup_newplace");
-//profileTitle = document.querySelector(".profile__title");
-//profileSubtitle = document.querySelector(".profile__subtitle");
-//const editPopup = ".popup_edit";
-//const username = document.getElementById("username");
-//const description = document.getElementById("description");
 const imgBig = document.querySelector(".image-big");
-// const closeButtons = Array.from(
-//   document.querySelectorAll(".popup__close-button")
-// );
 const editButton = document.querySelector(".profile__edit-button");
 const addButton = document.querySelector(".profile__add-button");
 const avatarButton = document.querySelector(".profile__avatar");
 const placeContainer = document.querySelector(".places"); //контейнер с карточками мест
 const avatarLink = document.getElementById("avatar-link");
-//profileImg = document.querySelector(".profile__img");
 const name = document.querySelector("#place-name"); //выбор поля с названием
 const url = document.querySelector("#image-link"); //поле со ссылкой
 let userId;
@@ -54,7 +37,10 @@ enableValidation({
   errorClass: "popup__input-error_active",
 });
 
-//Открытие модалки с большой картинкой
+//Открытие модалки с большой картинкой классом ВКЛЮЧИТЬ ПОЗЖЕ
+// const popupImg = new PopupWithImage ({
+//   selector: ".image-big",
+// })
 export function openImgBig() {
   openModalWindow(imgBig);
 }
@@ -87,9 +73,25 @@ const userEditPopup = new PopupWithForm({
 });
 
 //Редактирование аватарки
-function openAvatarPopup() {
-  openModalWindow(avatar);
-}
+const avatarPopup = new PopupWithForm({
+  selector: ".avatar",
+  handleFormSubmit: (formValues) => {
+    const avaLink = formValues["avatar-link"];
+    avatarPopup.renderLoading(true);
+    getApi
+      .changeAvatar(avaLink)
+      .then((res) => {
+        profileInfo.setUserInfo(res);
+        avatarPopup.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        avatarPopup.renderLoading(false);
+      });
+  },
+});
 
 //Получение данных профиля и отрисовка начальных карточек
 Promise.all([userApi, initCards])
@@ -109,49 +111,32 @@ Promise.all([userApi, initCards])
     console.log(err);
   });
 
-// Отправка формы редактирования профиля
-// function editFormSubmitHandler(evt) {
-//   evt.preventDefault();
-//   const submitButton = evt.submitter;
-//   const defaultButtonText = submitButton.textContent;
-//   renderLoading(true, submitButton);
-//   getApi.changeUserInfo({ name: username.value, about: description.value })
-//     .then((res) => {
-//       profileTitle.textContent = res.name;
-//       profileSubtitle.textContent = res.about;
-//       evt.target.reset(); //очистка полей формы после отправки
-//       closeModalWindow();
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     })
-//     .finally(() => {
-//       renderLoading(false, submitButton, defaultButtonText);
-//     });
-// }
 
-//Отправка нового аватара
-function avatarSubmitHandler(evt) {
-  evt.preventDefault();
-  const submitButton = evt.submitter;
-  const defaultButtonText = submitButton.textContent;
-  renderLoading(true, submitButton);
-  getApi
-    .changeAvatar(avatarLink.value)
-    .then((res) => {
-      profileImg.src = res.avatar;
-      evt.target.reset(); //очистка полей формы после отправки
-      closeModalWindow();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      renderLoading(false, submitButton, defaultButtonText);
-    });
-}
 
-// Отправка формы нового места
+// ----- ПОПАП НОВОГО МЕСТА КЛАССОМ ВКЛЮЧИТЬ ПОЗЖЕ  -----
+
+/*const newPlacePopup = new PopupWithForm ({
+  selector: ".popup_newplace",
+  handleFormSubmit: (formValues) => {
+    const name = formValues["place-name"];
+    const url = formValues["image-link"];
+    newPlacePopup.renderLoading(true);
+    getApi
+      .postNewCard({name, url})
+      .then((res) => {
+        // ВОТ ТУТ НАДО МЕТОД ВСТАВКИ
+        newPlacePopup.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        newPlacePopup.renderLoading(false);
+      });
+  }
+})*/
+
+
 function newPlaceSubmitHandler(evt) {
   evt.preventDefault();
   const submitButton = evt.submitter;
@@ -201,12 +186,13 @@ function renderLoading(isLoading, submitButton, defaultButtonText) {
 editButton.addEventListener("click", () => {
   const { name, about } = profileInfo.getUserInfo();
   userEditPopup.setInputValues({ username: name, description: about });
-  //сюда вставить вызов валидатора
+  //СЮДА ВСТАВИТЬ МЕТОД ВАЛИДАТОРА
   userEditPopup.open();
 });
 
 addButton.addEventListener("click", openNewPlace); //слушатель на добавление нового места
-avatarButton.addEventListener("click", openAvatarPopup);
+avatarButton.addEventListener("click", () => {
+  //СЮДА ВСАТВИТЬ МЕТОД ВАЛИДАТОРА
+  avatarPopup.open();
+});
 newPlace.addEventListener("submit", newPlaceSubmitHandler);
-//editPopup.addEventListener("submit", editFormSubmitHandler);
-avatar.addEventListener("submit", avatarSubmitHandler);
