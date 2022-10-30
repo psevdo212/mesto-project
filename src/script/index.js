@@ -1,4 +1,4 @@
-import { enableValidation } from "./validate.js";
+//import { enableValidation } from "./validate.js";
 import { openModalWindow, closeModalWindow } from "./modal.js";
 import { createCard } from "./cards.js";
 import UserInfo from "./components/UserInfo.js";
@@ -12,7 +12,8 @@ import PopupWithImage from "./components/PopupWithImage.js";
 //   postNewCard,
 // } from "./api.js";
 import Api from "./components/Api.js";
-import { config } from "./utils/constants.js";
+import { config, objectValidation } from "./utils/constants.js";
+import FormValidator from "./components/FormValidator.js";
 
 const avatar = document.querySelector(".avatar");
 const newPlace = document.querySelector(".popup_newplace");
@@ -45,14 +46,14 @@ const profileInfo = new UserInfo({
 }); //новый экземпляр класса UserInfo
 
 //включение валидации полей в модальных окнах
-enableValidation({
-  formSelector: ".popup__form",
-  inputSelector: ".popup__item",
-  submitButtonSelector: ".popup__submit-button",
-  inactiveButtonClass: "popup__submit-button_inactive",
-  inputErrorClass: "popup__item_type_error",
-  errorClass: "popup__input-error_active",
-});
+// enableValidation({
+//   formSelector: ".popup__form",
+//   inputSelector: ".popup__item",
+//   submitButtonSelector: ".popup__submit-button",
+//   inactiveButtonClass: "popup__submit-button_inactive",
+//   inputErrorClass: "popup__item_type_error",
+//   errorClass: "popup__input-error_active",
+// });
 
 //Открытие модалки с большой картинкой
 export function openImgBig() {
@@ -202,11 +203,34 @@ editButton.addEventListener("click", () => {
   const { name, about } = profileInfo.getUserInfo();
   userEditPopup.setInputValues({ username: name, description: about });
   //сюда вставить вызов валидатора
+  enableValidation(objectValidation);
   userEditPopup.open();
 });
 
 addButton.addEventListener("click", openNewPlace); //слушатель на добавление нового места
-avatarButton.addEventListener("click", openAvatarPopup);
+//avatarButton.addEventListener("click", openAvatarPopup);
+avatarButton.addEventListener("click", () => {
+  openAvatarPopup ();
+  enableValidation(objectValidation);
+});
 newPlace.addEventListener("submit", newPlaceSubmitHandler);
 //editPopup.addEventListener("submit", editFormSubmitHandler);
 avatar.addEventListener("submit", avatarSubmitHandler);
+
+//подключение валидации
+//объект со всеми экземплярами класса для каждой формы 
+const formValidatorArray = {};
+const enableValidation = (objectValidation) => {
+  console.log ('а тут все норм');
+  //собираем и обрабатываем массив форм
+  const formList = Array.from(document.querySelectorAll(objectValidation.formSelector));
+  formList.forEach((formElement) => {
+    //созлаем экземпляр класса FormValidator
+    const isValidation = new FormValidator(objectValidation, formElement);
+    //в объект под именем формы записываем экземпляр
+    const formName = formElement.getAttribute('name');
+    formValidatorArray[formName] = isValidation;
+
+    isValidation.enableValidation();
+  })
+}
