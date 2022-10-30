@@ -25,3 +25,12 @@ export const avatarLink = document.getElementById("avatar-link");
 export const profileImg = document.querySelector(".profile__img");
 export const name = document.querySelector("#place-name"); //выбор поля с названием
 export const url = document.querySelector("#image-link"); //поле со ссылкой
+
+export const objectValidation = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__item",
+  submitButtonSelector: ".popup__submit-button",
+  inactiveButtonClass: "popup__submit-button_inactive",
+  inputErrorClass: "popup__item_type_error",
+  errorClass: "popup__input-error_active",
+ };
