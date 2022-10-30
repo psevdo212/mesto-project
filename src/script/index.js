@@ -195,12 +195,12 @@ addButton.addEventListener("click", openNewPlace); //слушатель на д�
 
 //avatarButton.addEventListener("click", openAvatarPopup);
 avatarButton.addEventListener("click", () => {
-  openAvatarPopup ();
+  avatarPopup.open ();
   enableValidation(objectValidation);
 });
 newPlace.addEventListener("submit", newPlaceSubmitHandler);
 //editPopup.addEventListener("submit", editFormSubmitHandler);
-avatar.addEventListener("submit", avatarSubmitHandler);
+//avatar.addEventListener("submit", avatarSubmitHandler);
 
 //подключение валидации
 //объект со всеми экземплярами класса для каждой формы 
