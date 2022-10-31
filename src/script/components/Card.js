@@ -62,6 +62,12 @@ export default class Card {
         }
     }
 
+    updateLikes(res) {
+        this._likes = res._likes;
+        addLike ();
+      };
+    
+
     //удаление карточки
     deleteCard () {
         this._element.remove();

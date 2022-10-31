@@ -7,6 +7,7 @@ import PopupWithImage from "./components/PopupWithImage.js";
 import Api from "./components/Api.js";
 import { config, objectValidation } from "./utils/constants.js";
 import FormValidator from "./components/FormValidator.js";
+//import Card from "./components/Card.js";
 
 const newPlace = document.querySelector(".popup_newplace");
 const imgBig = document.querySelector(".image-big");
@@ -113,7 +114,7 @@ Promise.all([userApi, initCards])
   });
 
 
-
+ 
 // ----- ПОПАП НОВОГО МЕСТА КЛАССОМ ВКЛЮЧИТЬ ПОЗЖЕ  -----
 
 /*const newPlacePopup = new PopupWithForm ({
@@ -219,6 +220,43 @@ const enableValidation = (objectValidation) => {
     isValidation.enableValidation();
   })
 }
-
+enableValidation(objectValidation);
 newPlace.addEventListener("submit", newPlaceSubmitHandler);
 
+
+// function createCard(data) {
+//   const card = new Card({
+//     data: {...data, userId: profileInfo.returnUserId() },
+//     handleCardClick: () => {
+//       if (card.usersLike()) {
+//         getApi
+//         .deleteLike(card.id())
+//         .then((res) => {
+//           card.updateLikes(res)
+//         })
+//         .catch((err) => {
+//           console.log(err)
+//         })
+//       } else {
+//         getApi
+//         .setLike(card.id())
+//         .then((res) => {
+//           card.updateLikes(res)
+//         })
+//         .catch((err) => {
+//           console.log (err)
+//         })
+//       }
+//     },
+//     handleDeliteClick: () => {
+//       getApi
+//       .then(() => {
+//         card.deleteCard()
+//       })
+//       .catch((err) => {
+//         console.log (err)
+//       })
+//     }
+// }, '#place-template');
+// return card.generate();
+// }
