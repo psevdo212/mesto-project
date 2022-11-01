@@ -1,5 +1,6 @@
 export default class Card {
-    constructor ({ data: { _id, link, name, likes, userId, owner }, handleCardClick}, selector) {
+    constructor ({ data: { _id, link, name, likes, userId, owner }, handleCardClick, handleLikeClick, handleDeliteClick }, selector) {
+        super(selector);
         this._id = _id;
         this._link = link;
         this._name = name;
@@ -8,9 +9,9 @@ export default class Card {
         this._owner = owner._id;
         this._selector = selector;
         this._handleCardClick = handleCardClick;
-
+        this._handleLikeClick = handleLikeClick;
+        this._handleDeliteClick = handleDeliteClick;
     }
-
 
     //получить id карточки
     id() {
@@ -42,8 +43,8 @@ export default class Card {
         this._likeCounter.textContent = this._likeCounter.length;
 
         this._setEventListenersCard();
-
-        //возвращаем наружу
+        this._addLike();
+        
         return this._element;
 
     }
@@ -54,7 +55,7 @@ export default class Card {
     }
 
     //поставить лайк, в зависимости от наличия лайка пользователя
-    addLike () {
+    _addLike () {
         if (this.usersLike()) {
             this._likeButton.classList.add('place__like_active');
         } else {
@@ -62,20 +63,25 @@ export default class Card {
         }
     }
 
+    //обновить количество лайков
     updateLikes(res) {
         this._likes = res._likes;
-        addLike ();
+        _addLike ();
       };
     
 
     //удаление карточки
     deleteCard () {
         this._element.remove();
-        this._element = null;
+        //this._element = null;
     }
 
     //установка слушателей
     _setEventListenersCard() {
+        this._placeImg.setEventListener ('click', () => {
+            this._handleCardClick();
+        })
+
         this._likeButton.setEventListener ('click', () => {
             this._handleLikeClick();
         })
@@ -85,9 +91,5 @@ export default class Card {
                 this._handleDeliteClick();
             })
         }
-
-        this._placeImg.setEventListener ('click', () => {
-            this._handleCardClick();
-        })
     }
 }

@@ -1,20 +1,21 @@
 //import { enableValidation } from "./validate.js";
 import { openModalWindow, closeModalWindow } from "./modal.js";
-import { createCard } from "./cards.js";
+//import { createCard } from "./cards.js";
 import UserInfo from "./components/UserInfo.js";
 import PopupWithForm from "./components/PopupWithForm.js";
 import PopupWithImage from "./components/PopupWithImage.js";
 import Api from "./components/Api.js";
-import { config, objectValidation } from "./utils/constants.js";
+import { config, objectValidation, imgBig, placeContainer, newPlace } from "./utils/constants.js";
 import FormValidator from "./components/FormValidator.js";
 //import Card from "./components/Card.js";
-
-const newPlace = document.querySelector(".popup_newplace");
-const imgBig = document.querySelector(".image-big");
+//import Section from "./components/Section.js";
+//import { reverse } from "core-js/core/array";
+//const newPlace = document.querySelector(".popup_newplace");
+//const imgBig = document.querySelector(".image-big");
 const editButton = document.querySelector(".profile__edit-button");
 const addButton = document.querySelector(".profile__add-button");
 const avatarButton = document.querySelector(".profile__avatar");
-const placeContainer = document.querySelector(".places"); //контейнер с карточками мест
+//const placeContainer = document.querySelector(".places"); //контейнер с карточками мест
 const avatarLink = document.getElementById("avatar-link");
 const name = document.querySelector("#place-name"); //выбор поля с названием
 const url = document.querySelector("#image-link"); //поле со ссылкой
@@ -115,28 +116,28 @@ Promise.all([userApi, initCards])
 
 
  
-// ----- ПОПАП НОВОГО МЕСТА КЛАССОМ ВКЛЮЧИТЬ ПОЗЖЕ  -----
+// // ----- ПОПАП НОВОГО МЕСТА КЛАССОМ ВКЛЮЧИТЬ ПОЗЖЕ  -----
 
-/*const newPlacePopup = new PopupWithForm ({
-  selector: ".popup_newplace",
-  handleFormSubmit: (formValues) => {
-    const name = formValues["place-name"];
-    const url = formValues["image-link"];
-    newPlacePopup.renderLoading(true);
-    getApi
-      .postNewCard({name, url})
-      .then((res) => {
-        // ВОТ ТУТ НАДО МЕТОД ВСТАВКИ
-        newPlacePopup.close();
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        newPlacePopup.renderLoading(false);
-      });
-  }
-})*/
+// const newPlacePopup = new PopupWithForm ({
+//   selector: ".popup_newplace",
+//   handleFormSubmit: (formValues) => {
+//     const name = formValues["place-name"];
+//     const url = formValues["image-link"];
+//     newPlacePopup.renderLoading(true);
+//     getApi
+//       .postNewCard({name, url})
+//       .then((res) => {
+//         section (res);
+//         newPlacePopup.close();
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       })
+//       .finally(() => {
+//         newPlacePopup.renderLoading(false);
+//       });
+//   }
+// })
 
 
 function newPlaceSubmitHandler(evt) {
@@ -192,14 +193,14 @@ editButton.addEventListener("click", () => {
   userEditPopup.open();
 });
 
-addButton.addEventListener("click", openNewPlace); //слушатель на добавление нового места
+//addButton.addEventListener("click", openNewPlace); //слушатель на добавление нового места
 
 //avatarButton.addEventListener("click", openAvatarPopup);
 avatarButton.addEventListener("click", () => {
   openAvatarPopup ();
   enableValidation(objectValidation);
 });
-newPlace.addEventListener("submit", newPlaceSubmitHandler);
+//newPlace.addEventListener("submit", newPlaceSubmitHandler);
 //editPopup.addEventListener("submit", editFormSubmitHandler);
 //avatar.addEventListener("submit", avatarSubmitHandler);
 
@@ -221,13 +222,20 @@ const enableValidation = (objectValidation) => {
   })
 }
 enableValidation(objectValidation);
-newPlace.addEventListener("submit", newPlaceSubmitHandler);
+//newPlace.addEventListener("submit", newPlaceSubmitHandler);
 
+
+
+// const popupImg = new PopupWithImage(imgBig);
 
 // function createCard(data) {
 //   const card = new Card({
-//     data: {...data, userId: profileInfo.returnUserId() },
+//     data: {data, userId: profileInfo.returnUserId() },
 //     handleCardClick: () => {
+//       popupImg.open(data);
+//     },
+
+//     handleLikeClick: () => {
 //       if (card.usersLike()) {
 //         getApi
 //         .deleteLike(card.id())
@@ -248,6 +256,7 @@ newPlace.addEventListener("submit", newPlaceSubmitHandler);
 //         })
 //       }
 //     },
+
 //     handleDeliteClick: () => {
 //       getApi
 //       .then(() => {
@@ -260,3 +269,17 @@ newPlace.addEventListener("submit", newPlaceSubmitHandler);
 // }, '#place-template');
 // return card.generate();
 // }
+
+
+// const section = new Section ({ renderer: createCard}, placeContainer);
+
+// //Получение данных профиля и отрисовка начальных карточек
+// Promise.all([getApi.getUserInfo(), getApi.getInitialCards()])
+//   .then(([userData, cards]) => {
+//     // тут установка данных пользователя
+//     profileInfo.setUserInfo(userData);
+//     section.renderEl(reverse(cards));
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   })
