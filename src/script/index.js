@@ -3,7 +3,7 @@ import UserInfo from "./components/UserInfo.js";
 import PopupWithForm from "./components/PopupWithForm.js";
 import PopupWithImage from "./components/PopupWithImage.js";
 import Api from "./components/Api.js";
-import { config, objectValidation, imgBig, placeContainer, newPlace, addButton } from "./utils/constants.js";
+import { config, objectValidation, imgBig, placeContainer, places, newPlace, addButton } from "./utils/constants.js";
 import FormValidator from "./components/FormValidator.js";
 import Section from "./components/Section.js";
 import Card from "./components/Card.js";
@@ -17,6 +17,7 @@ const profileInfo = new UserInfo({
   profileSubtitle: ".profile__subtitle",
   profileImg: ".profile__img",
 }); //новый экземпляр класса UserInfo
+let userId = null;
 
 //РЕДАКТИРОВАНИЕ ПРОФИЛЯ
 const userEditPopup = new PopupWithForm({
@@ -125,58 +126,65 @@ const enableValidation = (objectValidation) => {
 enableValidation(objectValidation);
 
 //const popupImg = new PopupWithImage(imgBig);
-
-function createCard(data) {
+const createCard = (data) => {
   const card = new Card({
-    data: {data, userId: profileInfo.userId },
-    handleCardClick: (name, link) => {
-      popupImg.open(name, link);
+    data: data,
+    handleCardClick: () => {
+      popupImg.open(data);
     },
 
     handleLikeClick: () => {
-      if (card.usersLike()) {
-        getApi
-        .deleteLike(card.id())
-        .then((res) => {
-          card.updateLikes(res)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-      } else {
-        getApi
-        .setLike(card.id())
-        .then((res) => {
-          card.updateLikes(res)
-        })
-        .catch((err) => {
-          console.log (err)
-        })
-      }
+      card.addLike();
     },
 
+      // if (card.usersLike()) {
+      //   getApi
+      //   .deleteLike(card.cardId())
+      //   .then((res) => {
+      //     card.updateLikes(res)
+      //   })
+      //   .catch((err) => {
+      //     console.log(err)
+      //   })
+      // } else {
+      //   getApi
+      //   .setLike(card.cardId())
+      //   .then((res) => {
+      //     card.updateLikes(res)
+      //   })
+      //   .catch((err) => {
+      //     console.log (err)
+      //   })
+      // }
+    
+
     handleDeliteClick: () => {
-      getApi
+      getApi.deleteCard(data._id)
       .then(() => {
-        card.deleteCard()
+        card.deleteCard();
+
       })
       .catch((err) => {
-        console.log (err)
+        console.log (err);
       })
     }
-}, '#place-template');
+}, '#place-template', getApi, userId);
 return card.generate();
 }
-createCard();
 
-const section = new Section ({ renderer: createCard}, placeContainer);
+
+const initialCards = new Section ({ renderer: (data) => {
+  initialCards.addItem(createCard(data));
+ },
+ }, placeContainer);
 
 //Получение данных профиля и отрисовка начальных карточек
 Promise.all([getApi.getUserInfo(), getApi.getInitialCards()])
   .then(([userData, cards]) => {
     // тут установка данных пользователя
+    userId = userData._id;
     profileInfo.setUserInfo(userData);
-    section.renderEl(cards.reverse());
+    initialCards.renderEl(cards);
   })
   .catch((err) => {
     console.log(err);
