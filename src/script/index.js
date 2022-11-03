@@ -70,12 +70,12 @@ const newPlacePopup = new PopupWithForm ({
   selector: ".popup_newplace",
   handleFormSubmit: (formValues) => {
     const name = formValues["place-name"];
-    const url = formValues["image-link"];
+    const link = formValues["image-link"];
     newPlacePopup.renderLoading(true);
     getApi
-      .postNewCard(formValues)
+      .postNewCard({name, link})
       .then((res) => {
-        initialCards.addItem(res);
+        initialCards.addItem(createCard(res));
         newPlacePopup.close();
       })
       .catch((err) => {
