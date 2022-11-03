@@ -41,6 +41,7 @@ const userEditPopup = new PopupWithForm({
   },
 });
 
+
 //Редактирование аватарки
 const avatarPopup = new PopupWithForm({
   selector: ".avatar",
@@ -62,29 +63,6 @@ const avatarPopup = new PopupWithForm({
   },
 });
  
-// ----- ПОПАП НОВОГО МЕСТА  -----
-
-const newPlacePopup = new PopupWithForm ({
-  selector: ".popup_newplace",
-  handleFormSubmit: (formValues) => {
-    const name = formValues["place-name"];
-    const url = formValues["image-link"];
-    newPlacePopup.renderLoading(true);
-    getApi
-      .postNewCard({name, url})
-      .then((res) => {
-        section (res);
-        newPlacePopup.close();
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        newPlacePopup.renderLoading(false);
-      });
-  }
-})
-
 
 
 //слушатель на открытие окна редактирования профиля
@@ -176,6 +154,42 @@ const initialCards = new Section ({ renderer: (data) => {
   initialCards.addItem(createCard(data));
  },
  }, ".places");
+
+
+
+
+// ----- ПОПАП НОВОГО МЕСТА  -----
+
+const newPlacePopup = new PopupWithForm ({
+  selector: ".popup_newplace",
+  handleFormSubmit: (formValues) => {
+    const name = formValues["place-name"];
+    const url = formValues["image-link"];
+    newPlacePopup.renderLoading(true);
+    getApi
+      .postNewCard({ name, url })
+      .then((data) => {
+        initialCards.addItem(createCard(data));
+        newPlacePopup.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        newPlacePopup.renderLoading(false);
+      });
+  }
+})
+
+
+
+
+
+
+
+
+
+
 
 //Получение данных профиля и отрисовка начальных карточек
 Promise.all([getApi.getUserInfo(), getApi.getInitialCards()])

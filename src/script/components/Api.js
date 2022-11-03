@@ -45,7 +45,7 @@ export default class Api {
       }),
     });
   };
-
+  
   postNewCard = (card) => {
     return this._request(`${this._baseUrl}/cards`, {
       method: "POST",

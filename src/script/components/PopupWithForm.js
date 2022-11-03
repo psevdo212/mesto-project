@@ -46,4 +46,4 @@ export default class PopupWithForm extends Popup {
       item.value = data[item.name];
     });
   }
-}
+ }
