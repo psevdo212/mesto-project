@@ -45,12 +45,15 @@ export default class Api {
       }),
     });
   };
-
+  
   postNewCard = (card) => {
     return this._request(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
-      body: JSON.stringify(card),
+      body: JSON.stringify({
+        name: card.name,
+        link: card.link
+      }),
     });
   };
 
