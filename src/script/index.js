@@ -106,6 +106,10 @@ avatarButton.addEventListener("click", () => {
 });
 
 
+//newPlace.addEventListener("submit", newPlaceSubmitHandler);
+//editPopup.addEventListener("submit", editFormSubmitHandler);
+//avatar.addEventListener("submit", avatarSubmitHandler);
+
 //подключение валидации
 //объект со всеми экземплярами класса для каждой формы 
 const formValidatorArray = {};
