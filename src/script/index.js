@@ -10,6 +10,7 @@ import Card from "./components/Card.js";
 const editButton = document.querySelector(".profile__edit-button");
 const avatarButton = document.querySelector(".profile__avatar");
 const getApi = new Api(config); //новый экземпляр класса Api
+const popupImg = new PopupWithImage(".image-big");
 //const userApi = getApi.getUserInfo(); //тут получаем инфу о пользователе
 //const initCards = getApi.getInitialCards(); //тут получаем изначальный массив карточек
 const profileInfo = new UserInfo({
@@ -62,26 +63,46 @@ const avatarPopup = new PopupWithForm({
       });
   },
 });
- 
 
 
-//слушатель на открытие окна редактирования профиля
+// ----- ПОПАП НОВОГО МЕСТА  -----
+const newPlacePopup = new PopupWithForm ({
+  selector: ".popup_newplace",
+  handleFormSubmit: (formValues) => {
+    const name = formValues["place-name"];
+    const url = formValues["image-link"];
+    newPlacePopup.renderLoading(true);
+    getApi
+      .postNewCard(formValues)
+      .then((res) => {
+        initialCards.addItem(res);
+        newPlacePopup.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        newPlacePopup.renderLoading(false);
+      });
+  }
+})
+
+//слушатели
 editButton.addEventListener("click", () => {
   const { name, about } = profileInfo.getUserInfo();
   userEditPopup.setInputValues({ username: name, description: about });
-  enableValidation(objectValidation);
+  formValidatorArray['profile-edit'].resetValid();
   userEditPopup.open();
 });
 
 addButton.addEventListener("click", () => {
+  formValidatorArray['place-add'].resetValid();
   newPlacePopup.open();
-  enableValidation(objectValidation);
-}); //слушатель на добавление нового места
-
+});
 
 avatarButton.addEventListener("click", () => {
+  formValidatorArray['avatar'].resetValid();
   avatarPopup.open();
-  enableValidation(objectValidation);
 });
 
 
@@ -103,7 +124,7 @@ const enableValidation = (objectValidation) => {
 }
 enableValidation(objectValidation);
 
-const popupImg = new PopupWithImage(".image-big");
+
 const createCard = (data) => {
   const card = new Card({
     data: data,
@@ -112,35 +133,13 @@ const createCard = (data) => {
     },
 
     handleLikeClick: () => {
-      card.addLike();
-    
-
-      if (card.usersLike()) {
-        getApi
-        .deleteLike(card.cardId())
-        .then((res) => {
-          card.updateLikes(res)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-      } else {
-        getApi
-        .setLike(card.cardId())
-        .then((res) => {
-          card.updateLikes(res)
-        })
-        .catch((err) => {
-          console.log (err)
-        })
-      }
+       card.addLike();
     },
 
     handleDeliteClick: () => {
       getApi.deleteCard(data._id)
       .then(() => {
         card.deleteCard();
-
       })
       .catch((err) => {
         console.log (err);
@@ -154,42 +153,6 @@ const initialCards = new Section ({ renderer: (data) => {
   initialCards.addItem(createCard(data));
  },
  }, ".places");
-
-
-
-
-// ----- ПОПАП НОВОГО МЕСТА  -----
-
-const newPlacePopup = new PopupWithForm ({
-  selector: ".popup_newplace",
-  handleFormSubmit: (formValues) => {
-    const name = formValues["place-name"];
-    const url = formValues["image-link"];
-    newPlacePopup.renderLoading(true);
-    getApi
-      .postNewCard({ name, url })
-      .then((data) => {
-        initialCards.addItem(createCard(data));
-        newPlacePopup.close();
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        newPlacePopup.renderLoading(false);
-      });
-  }
-})
-
-
-
-
-
-
-
-
-
-
 
 //Получение данных профиля и отрисовка начальных карточек
 Promise.all([getApi.getUserInfo(), getApi.getInitialCards()])
