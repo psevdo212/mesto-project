@@ -125,7 +125,7 @@ const enableValidation = (objectValidation) => {
 }
 enableValidation(objectValidation);
 
-//const popupImg = new PopupWithImage(imgBig);
+const popupImg = new PopupWithImage(".image-big");
 const createCard = (data) => {
   const card = new Card({
     data: data,
@@ -135,28 +135,28 @@ const createCard = (data) => {
 
     handleLikeClick: () => {
       card.addLike();
-    },
-
-      // if (card.usersLike()) {
-      //   getApi
-      //   .deleteLike(card.cardId())
-      //   .then((res) => {
-      //     card.updateLikes(res)
-      //   })
-      //   .catch((err) => {
-      //     console.log(err)
-      //   })
-      // } else {
-      //   getApi
-      //   .setLike(card.cardId())
-      //   .then((res) => {
-      //     card.updateLikes(res)
-      //   })
-      //   .catch((err) => {
-      //     console.log (err)
-      //   })
-      // }
     
+
+      if (card.usersLike()) {
+        getApi
+        .deleteLike(card.cardId())
+        .then((res) => {
+          card.updateLikes(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      } else {
+        getApi
+        .setLike(card.cardId())
+        .then((res) => {
+          card.updateLikes(res)
+        })
+        .catch((err) => {
+          console.log (err)
+        })
+      }
+    },
 
     handleDeliteClick: () => {
       getApi.deleteCard(data._id)
@@ -172,11 +172,10 @@ const createCard = (data) => {
 return card.generate();
 }
 
-
 const initialCards = new Section ({ renderer: (data) => {
   initialCards.addItem(createCard(data));
  },
- }, placeContainer);
+ }, ".places");
 
 //Получение данных профиля и отрисовка начальных карточек
 Promise.all([getApi.getUserInfo(), getApi.getInitialCards()])

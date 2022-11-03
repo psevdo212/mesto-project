@@ -32,19 +32,19 @@ export default class Card {
         this._placeImg = this._element.querySelector(".place__image");
         this._placeImg.src = this._link;
         this._placeImg.alt = this._name;
-
-        this._name = this._element.querySelector(".place__title").textContent;
-
+        this._element.querySelector(".place__title").textContent = this._name;
+        this._title = this._element.querySelector(".place__title");
+        this._title.textContent = this._name;
         this._likeButton = this._element.querySelector(".place__like");
         this._likeCounter = this._element.querySelector(".place__like-count");
         this._placeDeleteButton = this._element.querySelector(".place__delete");
-        this._likeCounter.textContent = this._likeCounter.length;
+        this._likeCounter.textContent = this._likes.length;
 
         if(!(this._owner === this._userId)) {
             this._placeDeleteButton.style.display = 'none';
         }
         if (this._likes.find((obj) => this._userId === obj._id)) {
-            this._likeButton.classList.add('.place__like_active')
+            this._likeButton.classList.add('place__like_active')
         }
 
         this._setEventListenersCard();
@@ -52,6 +52,8 @@ export default class Card {
         return this._element;
 
     }
+
+    
 
     //постановка и счетчик лайков, относительно того кто нажал
     addLike () {
@@ -87,7 +89,7 @@ export default class Card {
 
     //установка слушателей
     _setEventListenersCard() {
-        this._placeImg.setEventListener ('click', () => {
+        this._placeImg.addEventListener ('click', () => {
             this._handleCardClick({
                 link: this._link,
                 name: this._name,
@@ -95,11 +97,11 @@ export default class Card {
             });
         })
 
-        this._likeButton.setEventListener ('click', () => {
-            this._addLike();
+        this._likeButton.addEventListener ('click', () => {
+            this.addLike();
         })
         
-        this._placeDeleteButton.setEventListener ('click', () => {
+        this._placeDeleteButton.addEventListener ('click', () => {
             this._handleDeliteClick();
         })
         
