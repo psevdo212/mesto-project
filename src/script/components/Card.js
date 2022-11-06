@@ -66,7 +66,8 @@ export default class Card {
 
   //удаление карточки
   deleteCard() {
-    this._element.closest(".place").remove();
+    this._element.remove();
+    this._element = null;
   }
 
   //установка слушателей
