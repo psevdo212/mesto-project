@@ -10,7 +10,7 @@
     "deploy": "gh-pages -d dist"
   },
   "author": "Александр Родионов",
-  "license": "",
+  "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.19.1",
     "@babel/preset-env": "^7.19.1",
@@ -29,5 +29,13 @@
   },
   "dependencies": {
     "core-js": "^3.25.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/psevdo212/mesto-project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/psevdo212/mesto-project/issues"
+  },
+  "homepage": "https://github.com/psevdo212/mesto-project#readme"
 }

@@ -1,176 +1,189 @@
-"use strict";
-
-import { enableValidation } from "./validate.js";
-import { openModalWindow, closeModalWindow } from "./modal.js";
-import { createCard } from "./cards.js";
-import {
-  getInitialCards,
-  getUserInfo,
-  changeUserInfo,
-  changeAvatar,
-  postNewCard,
-} from "./api.js";
-
-const avatar = document.querySelector(".avatar");
-const newPlace = document.querySelector(".popup_newplace");
-const profileTitle = document.querySelector(".profile__title");
-const profileSubtitle = document.querySelector(".profile__subtitle");
-const editPopup = document.querySelector(".popup_edit");
-const username = document.getElementById("username");
-const description = document.getElementById("description");
-const imgBig = document.querySelector(".image-big");
-const closeButtons = Array.from(
-  document.querySelectorAll(".popup__close-button")
-);
+import UserInfo from "./components/UserInfo.js";
+import PopupWithForm from "./components/PopupWithForm.js";
+import PopupWithImage from "./components/PopupWithImage.js";
+import Api from "./components/Api.js";
+import { config, objectValidation, addButton } from "./utils/constants.js";
+import FormValidator from "./components/FormValidator.js";
+import Section from "./components/Section.js";
+import Card from "./components/Card.js";
 const editButton = document.querySelector(".profile__edit-button");
-const addButton = document.querySelector(".profile__add-button");
 const avatarButton = document.querySelector(".profile__avatar");
-const placeContainer = document.querySelector(".places"); //контейнер с карточками мест
-const avatarLink = document.getElementById("avatar-link");
-const profileImg = document.querySelector(".profile__img");
-const name = document.querySelector("#place-name"); //выбор поля с названием
-const url = document.querySelector("#image-link"); //поле со ссылкой
-let userId;
-
-//включение валидации полей в модальных окнах
-enableValidation({
-  formSelector: ".popup__form",
-  inputSelector: ".popup__item",
-  submitButtonSelector: ".popup__submit-button",
-  inactiveButtonClass: "popup__submit-button_inactive",
-  inputErrorClass: "popup__item_type_error",
-  errorClass: "popup__input-error_active",
-});
-
-//Открытие модалки с большой картинкой
-export function openImgBig() {
-  openModalWindow(imgBig);
-}
-
-//открытие окна добавления нового места
-function openNewPlace() {
-  openModalWindow(newPlace);
-}
+const getApi = new Api(config); //новый экземпляр класса Api
+const popupImg = new PopupWithImage(".image-big");
+const profileInfo = new UserInfo({
+  profileTitle: ".profile__title",
+  profileSubtitle: ".profile__subtitle",
+  profileImg: ".profile__img",
+}); //новый экземпляр класса UserInfo
+let userId = null;
 
 //РЕДАКТИРОВАНИЕ ПРОФИЛЯ
-function openEditPopup() {
-  //открытие модалки редактирования
-  username.value = profileTitle.textContent; // Заменяем заглушку на имя из профиля
-  description.value = profileSubtitle.textContent;
-  openModalWindow(editPopup);
-}
+const userEditPopup = new PopupWithForm({
+  selector: ".popup_edit",
+  handleFormSubmit: (formValues) => {
+    const name = formValues["username"];
+    const about = formValues["description"];
+    userEditPopup.renderLoading(true);
+    getApi
+      .changeUserInfo({ name, about })
+      .then((res) => {
+        profileInfo.setUserInfo(res);
+        userEditPopup.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        userEditPopup.renderLoading(false);
+      });
+  },
+});
 
 //Редактирование аватарки
-function openAvatarPopup() {
-  openModalWindow(avatar);
-}
+const avatarPopup = new PopupWithForm({
+  selector: ".avatar",
+  handleFormSubmit: (formValues) => {
+    const avaLink = formValues["avatar-link"];
+    avatarPopup.renderLoading(true);
+    getApi
+      .changeAvatar(avaLink)
+      .then((res) => {
+        profileInfo.setUserAvatar(res);
+        avatarPopup.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        avatarPopup.renderLoading(false);
+      });
+  },
+});
+
+// ----- ПОПАП НОВОГО МЕСТА  -----
+const newPlacePopup = new PopupWithForm({
+  selector: ".popup_newplace",
+  handleFormSubmit: (formValues) => {
+    const name = formValues["place-name"];
+    const link = formValues["image-link"];
+    newPlacePopup.renderLoading(true);
+    getApi
+      .postNewCard({ name, link })
+      .then((res) => {
+        cardsContainer.addItem(createCard(res));
+        newPlacePopup.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        newPlacePopup.renderLoading(false);
+      });
+  },
+});
+
+//слушатели
+editButton.addEventListener("click", () => {
+  const { name, about } = profileInfo.getUserInfo();
+  userEditPopup.setInputValues({ username: name, description: about });
+  formValidatorArray["profile-edit"].resetValid();
+  userEditPopup.open();
+});
+
+addButton.addEventListener("click", () => {
+  formValidatorArray["place-add"].resetValid();
+  newPlacePopup.open();
+});
+
+avatarButton.addEventListener("click", () => {
+  formValidatorArray["avatar"].resetValid();
+  avatarPopup.open();
+});
+
+//подключение валидации
+const formValidatorArray = {};
+const enableValidation = (objectValidation) => {
+  const formList = Array.from(
+    document.querySelectorAll(objectValidation.formSelector)
+  );
+  formList.forEach((formElement) => {
+    //созлаем экземпляр класса FormValidator
+    const isValidation = new FormValidator(objectValidation, formElement);
+    //в объект под именем формы записываем экземпляр
+    const formName = formElement.getAttribute("name");
+    formValidatorArray[formName] = isValidation;
+
+    isValidation.enableValidation();
+  });
+};
+enableValidation(objectValidation);
+
+const createCard = (data) => {
+  const card = new Card(
+    {
+      data: data,
+      handleCardClick: () => {
+        popupImg.open(data);
+      },
+
+      handleLikeClick: () => {
+        if(!card.isLiked()) {
+          getApi
+          .deleteLike(data._id)
+          .then((res) => {
+            card.addLIke(res);
+          })
+          .catch((res) => {
+            console.log (res)
+          })
+        } else {
+          getApi
+          .setLike(data._id)
+          .then((res) => {
+            card.addLIke(res);
+          })
+          .catch((res) => {
+            console.log (res)
+          })
+        }
+      },
+
+      handleDeliteClick: () => {
+        getApi
+          .deleteCard(data._id)
+          .then(() => {
+            card.deleteCard();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      },
+    },
+    "#place-template",
+    getApi,
+    userId
+  );
+  return card.generate();
+};
+
+const cardsContainer = new Section(
+  {
+    renderer: (data) => {
+      cardsContainer.addItem(createCard(data));
+    },
+  },
+  ".places"
+);
 
 //Получение данных профиля и отрисовка начальных карточек
-Promise.all([getUserInfo(), getInitialCards()])
+Promise.all([getApi.getUserInfo(), getApi.getInitialCards()])
   .then(([userData, cards]) => {
     // тут установка данных пользователя
-    profileTitle.textContent = userData.name;
-    profileSubtitle.textContent = userData.about;
-    profileImg.src = userData.avatar;
     userId = userData._id;
-    // и тут отрисовка карточек
-    cards.reverse().forEach((item) => {
-      addCard(placeContainer, createCard(item, userId));
-    });
+    profileInfo.setUserInfo(userData);
+    cardsContainer.renderEl(cards.reverse());
   })
   .catch((err) => {
     console.log(err);
   });
-
-// Отправка формы редактирования профиля
-function editFormSubmitHandler(evt) {
-  evt.preventDefault();
-  const submitButton = evt.submitter;
-  const defaultButtonText = submitButton.textContent;
-  renderLoading(true, submitButton);
-  changeUserInfo({ name: username.value, about: description.value })
-    .then((res) => {
-      profileTitle.textContent = res.name;
-      profileSubtitle.textContent = res.about;
-      evt.target.reset(); //очистка полей формы после отправки
-      closeModalWindow();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      renderLoading(false, submitButton, defaultButtonText);
-    });
-}
-
-//Отправка нового аватара
-function avatarSubmitHandler(evt) {
-  evt.preventDefault();
-  const submitButton = evt.submitter;
-  const defaultButtonText = submitButton.textContent;
-  renderLoading(true, submitButton);
-  changeAvatar(avatarLink.value)
-    .then((res) => {
-      profileImg.src = res.avatar;
-      evt.target.reset(); //очистка полей формы после отправки
-      closeModalWindow();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      renderLoading(false, submitButton, defaultButtonText);
-    });
-}
-
-// Отправка формы нового места
-function newPlaceSubmitHandler(evt) {
-  evt.preventDefault();
-  const submitButton = evt.submitter;
-  const defaultButtonText = submitButton.textContent;
-  renderLoading(true, submitButton);
-  postNewCard({
-    name: name.value,
-    link: url.value,
-  })
-    .then((res) => {
-      const card = createCard(res, userId);
-      addCard(placeContainer, card);
-      evt.target.reset(); //очистка полей формы после отправки
-      closeModalWindow();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      renderLoading(false, submitButton, defaultButtonText);
-    });
-}
-
-//Добавление новой карточки
-function addCard(сontainer, element) {
-  сontainer.prepend(element); //размещение нового элемента в начале списка
-}
-
-//Изменение текста кнопки при сохранении
-function renderLoading(isLoading, submitButton, defaultButtonText) {
-  if (isLoading) {
-    submitButton.textContent = "Сохранение...";
-  } else {
-    submitButton.textContent = defaultButtonText;
-  }
-}
-
-// слушатель на каждую кнопку закрытия модального окна
-closeButtons.forEach((item) => {
-  item.addEventListener("click", (item) => {
-    closeModalWindow();
-  });
-});
-
-editButton.addEventListener("click", openEditPopup); //слушатель на открытие окна редактирования профиля
-addButton.addEventListener("click", openNewPlace); //слушатель на добавление нового места
-avatarButton.addEventListener("click", openAvatarPopup);
-newPlace.addEventListener("submit", newPlaceSubmitHandler);
-editPopup.addEventListener("submit", editFormSubmitHandler);
-avatar.addEventListener("submit", avatarSubmitHandler);
+  
