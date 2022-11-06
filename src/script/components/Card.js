@@ -50,31 +50,18 @@ export default class Card {
     return this._element;
   }
 
-  //постановка и счетчик лайков, относительно того кто нажал
-  addLike() {
-    if (!this._likeButton.classList.contains("place__like_active")) {
-      this._api
-        .setLike(this._id)
-        .then((card) => {
-          this._likes = card.likes;
-          this._likeButton.classList.add("place__like_active");
-          this._likeCounter.textContent = this._likes.length;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      this._api
-        .deleteLike(this._id)
-        .then((card) => {
-          this._likes = card.likes;
-          this._likeButton.classList.remove("place__like_active");
-          this._likeCounter.textContent = this._likes.length;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+  isLiked() {
+    return Boolean(!this._likeButton.classList.contains("place__like_active"));
+  }
+
+  addLIke(data) {
+    this._likes = data.likes;
+    if (this.isLiked()) {
+      this._likeButton.classList.add("place__like_active");
+      } else {
+      this._likeButton.classList.remove("place__like_active");
     }
+    this._likeCounter.textContent = this._likes.length;
   }
 
   //удаление карточки
@@ -92,7 +79,7 @@ export default class Card {
       });
     });
     this._likeButton.addEventListener("click", () => {
-      this.addLike();
+      this._handleLikeClick();
     });
     this._placeDeleteButton.addEventListener("click", () => {
       this._handleDeliteClick();

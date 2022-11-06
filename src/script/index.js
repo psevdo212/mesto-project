@@ -127,7 +127,25 @@ const createCard = (data) => {
       },
 
       handleLikeClick: () => {
-        card.addLike();
+        if(!card.isLiked()) {
+          getApi
+          .deleteLike(data._id)
+          .then((res) => {
+            card.addLIke(res);
+          })
+          .catch((res) => {
+            console.log (res)
+          })
+        } else {
+          getApi
+          .setLike(data._id)
+          .then((res) => {
+            card.addLIke(res);
+          })
+          .catch((res) => {
+            console.log (res)
+          })
+        }
       },
 
       handleDeliteClick: () => {
