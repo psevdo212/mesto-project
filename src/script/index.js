@@ -48,7 +48,7 @@ const avatarPopup = new PopupWithForm({
     getApi
       .changeAvatar(avaLink)
       .then((res) => {
-        profileInfo.setUserInfo(res);
+        profileInfo.setUserAvatar(res);
         avatarPopup.close();
       })
       .catch((err) => {
@@ -70,7 +70,7 @@ const newPlacePopup = new PopupWithForm({
     getApi
       .postNewCard({ name, link })
       .then((res) => {
-        initialCards.addItem(createCard(res));
+        cardsContainer.addItem(createCard(res));
         newPlacePopup.close();
       })
       .catch((err) => {
@@ -166,10 +166,10 @@ const createCard = (data) => {
   return card.generate();
 };
 
-const initialCards = new Section(
+const cardsContainer = new Section(
   {
     renderer: (data) => {
-      initialCards.addItem(createCard(data));
+      cardsContainer.addItem(createCard(data));
     },
   },
   ".places"
@@ -181,8 +181,9 @@ Promise.all([getApi.getUserInfo(), getApi.getInitialCards()])
     // тут установка данных пользователя
     userId = userData._id;
     profileInfo.setUserInfo(userData);
-    initialCards.renderEl(cards);
+    cardsContainer.renderEl(cards.reverse());
   })
   .catch((err) => {
     console.log(err);
   });
+  
